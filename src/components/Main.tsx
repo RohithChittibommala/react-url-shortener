@@ -76,7 +76,7 @@ const Main: React.FC<Props> = ({ setState, state }) => {
             <div>
               <h2>There you go !</h2>
             </div>
-            <div>
+            <div className="outer">
               <div className="inner">
                 <p>{state.shortenedUrl}</p>
                 <img

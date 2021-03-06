@@ -55,7 +55,7 @@ nav {
   background: #c3e2fd;
   border-radius: 3px;
   a {
-    color: #44abf0;
+    color: #2c8fd1;
     font-weight: 600;
   }
 }
@@ -64,8 +64,7 @@ nav {
 .main {
   display: flex;
   // flex-direction: column;
-  // background: #f8f8f8;
-  border-bottom: 1px dotted red;
+  // background: #f8f8f8
   margin: 2% 0;
   flex-wrap: wrap;
   padding: 12px;
@@ -115,7 +114,7 @@ nav {
     font-size: 16px;
     cursor: pointer;
     background-color: #e6f7f9;
-    color: #019ea7;
+    color: #03abb5;
   }
   button.active {
     cursor: not-allowed;
@@ -153,6 +152,11 @@ h2 {
   width: 60%;
   padding: 12px 0;
   margin: 0 auto;
+
+  .outer {
+    padding: 10px;
+  }
+
   h2 {
     text-align: center;
     font-size: 2.6rem;
