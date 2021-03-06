@@ -1,29 +1,100 @@
 import { useRef } from "react";
-
-interface Props {}
-const Main: React.FC<Props> = (props) => {
+import { State } from "../App";
+import QRCode from "react-qr-code";
+interface Props {
+  setState: React.Dispatch<React.SetStateAction<State>>;
+  state: State;
+}
+const Main: React.FC<Props> = ({ setState, state }) => {
   const ref = useRef<HTMLInputElement>(null);
+
   const handleUrlShorten = () => {
+    console.log(state);
+    setState((prev) => ({ ...prev, loading: true }));
     fetch(
-      `${process.env.REACR_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${ref.current?.value}`
+      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${ref.current?.value}`
     )
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) => {
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          shortenedUrl: res.url?.shortLink,
+        }));
+        if (ref.current?.value) ref.current.value = "";
+      })
       .catch((err) => console.log(err));
   };
 
+  const validURL = (str: string = "") => {
+    const pattern = new RegExp(
+      "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$",
+      "i"
+    ); // fragment locator
+    pattern.test(str) && handleUrlShorten();
+  };
+
+  const text = state.loading ? "shrinking" : "shrink";
+
   return (
-    <div className="main">
+    <>
+      <div className="main">
+        <div className="illustration">
+          <img src={require("../assets/illustration.svg").default} alt="" />
+        </div>
+        <div className="input-box-container">
+          <div className="text">
+            <h2>Keep it brief</h2>
+            <h2>
+              A <span>easier</span> way to <span>share links</span>
+            </h2>
+          </div>
+          <div className="input-box">
+            <input
+              type="text"
+              placeholder="Type or paste your link"
+              ref={ref}
+            />
+            <button
+              onClick={() => validURL(ref.current?.value)}
+              disabled={state.loading}
+              className={`shrink-btn ${state.loading ? `active` : ``}`}
+            >
+              {text}
+            </button>
+          </div>
+        </div>
+      </div>
       <div>
-        <img src={require("../assets/illustration.svg").default} alt="" />
+        {state.shortenedUrl && (
+          <div className="shrinked-link">
+            <div>
+              <h2>There you go !</h2>
+            </div>
+            <div>
+              <div className="inner">
+                <p>{state.shortenedUrl}</p>
+                <img
+                  src={require("../assets/clipboard.svg").default}
+                  alt="clipboard svg"
+                  onClick={() =>
+                    navigator.clipboard.writeText(state.shortenedUrl)
+                  }
+                />
+              </div>
+              <div className="qr-code">
+                <QRCode value={state.shortenedUrl} size={200} />,
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      <div className="input-box">
-        <input type="text" placeholder="Type or paste your link" ref={ref} />
-        <button onClick={handleUrlShorten} className="shrink-btn">
-          Shrink
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 

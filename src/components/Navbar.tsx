@@ -10,10 +10,10 @@ const Navbar: React.FC<Props> = (props) => {
           <span>Rohi</span>.th
         </p>
       </div>
-      <div className="theme-switcher">
-        <button>
-          <span></span>
-        </button>
+      <div className="github">
+        <a href="https://github.com/RohithChittibommala/react-url-shortener">
+          GitHub
+        </a>
       </div>
     </nav>
   );
