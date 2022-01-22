@@ -22,7 +22,9 @@ const Main: React.FC<Props> = ({ setState, state }) => {
 
 
     fetch(
-      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}`
+      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}`,{
+        mode: "no-cors",
+      }
     )
       .then((res) => res.json())
       .then((res) => {
