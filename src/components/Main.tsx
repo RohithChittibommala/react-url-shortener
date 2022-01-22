@@ -20,7 +20,7 @@ const Main: React.FC<Props> = ({ setState, state }) => {
 
 
     fetch(
-      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}&name={rohith}`
+      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}&name=rohith`
     )
       .then((res) => res.json())
       .then((res) => {
