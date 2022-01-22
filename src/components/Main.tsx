@@ -39,11 +39,11 @@ const Main: React.FC<Props> = ({ setState, state }) => {
 
         
 
-        setState((prev) => ({
-          ...prev,
-          loading: false,
-          shortenedUrl: res.url?.shortLink,
-        }));
+        // setState((prev) => ({
+        //   ...prev,
+        //   loading: false,
+        //   shortenedUrl: res?.url?.shortLink,
+        // }));
         
       })
       .catch((err) =>{
