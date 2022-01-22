@@ -28,6 +28,11 @@ const Main: React.FC<Props> = ({ setState, state }) => {
     )
       .then((res) => res.json())
       .then((res) => {
+
+
+        console.log(res);
+        
+
         setState((prev) => ({
           ...prev,
           loading: false,
@@ -36,6 +41,8 @@ const Main: React.FC<Props> = ({ setState, state }) => {
         
       })
       .catch((err) =>{
+        console.log(err);
+        
           setState((prev) => ({ ...prev, loading: false }));
       })
   };
