@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState} from "react";
 import { State } from "../App";
 import QRCode from "react-qr-code";
 interface Props {
@@ -6,7 +6,9 @@ interface Props {
   state: State;
 }
 const Main: React.FC<Props> = ({ setState, state }) => {
-  const ref = useRef<HTMLInputElement>(null);
+  
+
+  const [ inputUrl,setInputUrl]=useState("")
 
   const handleUrlShorten = () => {
     
@@ -16,11 +18,11 @@ const Main: React.FC<Props> = ({ setState, state }) => {
     // https://cutt.ly/api/api.php?key=[API_KEY]&short=$url&name=[CUSTOM_URL_ALIAS]
 
 
-    const url=encodeURIComponent(ref.current?.value)
+    const url=encodeURIComponent(inputUrl)
 
 
     fetch(
-      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}&name=rohith`
+      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -29,7 +31,7 @@ const Main: React.FC<Props> = ({ setState, state }) => {
           loading: false,
           shortenedUrl: res.url?.shortLink,
         }));
-        if (ref.current?.value) ref.current.value = "";
+        
       })
       .catch((err) => console.log(err));
   };
@@ -65,11 +67,12 @@ const Main: React.FC<Props> = ({ setState, state }) => {
           <div className="input-box">
             <input
               type="text"
+              value={inputUrl}
+              onChange={e=>setInputUrl(e.target.value)}
               placeholder="Type or paste your link"
-              ref={ref}
             />
             <button
-              onClick={() => validURL(ref.current?.value)}
+              onClick={() => validURL(inputUrl)}
               disabled={state.loading}
               className={`shrink-btn ${state.loading ? `active` : ``}`}
             >
