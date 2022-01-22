@@ -26,11 +26,17 @@ const Main: React.FC<Props> = ({ setState, state }) => {
         mode: "no-cors",
       }
     )
-      .then((res) => res.json())
+      .then((res) => {
+       
+       
+        console.log(res);
+
+
+        res.json()
+      })
       .then((res) => {
 
 
-        console.log(res);
         
 
         setState((prev) => ({
