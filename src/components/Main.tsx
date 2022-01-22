@@ -33,7 +33,9 @@ const Main: React.FC<Props> = ({ setState, state }) => {
         }));
         
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{
+          setState((prev) => ({ ...prev, loading: false }));
+      })
   };
 
   const validURL = (str: string = "") => {
