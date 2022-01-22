@@ -16,8 +16,11 @@ const Main: React.FC<Props> = ({ setState, state }) => {
     // https://cutt.ly/api/api.php?key=[API_KEY]&short=$url&name=[CUSTOM_URL_ALIAS]
 
 
+    const url=encodeURIComponent(ref.current?.value)
+
+
     fetch(
-      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${encodeURIComponent(ref.current?.value)}&name={rohith}`
+      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${url}&name={rohith}`
     )
       .then((res) => res.json())
       .then((res) => {
