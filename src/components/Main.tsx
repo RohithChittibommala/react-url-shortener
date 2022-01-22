@@ -9,10 +9,15 @@ const Main: React.FC<Props> = ({ setState, state }) => {
   const ref = useRef<HTMLInputElement>(null);
 
   const handleUrlShorten = () => {
-    console.log(state);
+    
     setState((prev) => ({ ...prev, loading: true }));
+   
+
+    // https://cutt.ly/api/api.php?key=[API_KEY]&short=$url&name=[CUSTOM_URL_ALIAS]
+
+
     fetch(
-      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${ref.current?.value}`
+      `${process.env.REACT_APP_BASE_URL}?key=${process.env.REACT_APP_API_KEY}&short=${encodeURIComponent(ref.current?.value)}&name={rohith}`
     )
       .then((res) => res.json())
       .then((res) => {
